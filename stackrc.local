@@ -1,5 +1,8 @@
-CINDER_REPO=gitolite@gitolite.mirantis.com:netapp-e-series/netapp-e-series
+CINDER_REPO=gitolite@gitolite.mirantis.com:netapp-e-series/netapp-e-series.git
 CINDER_BRANCH=master
+
+TEMPEST_REPO=gitolite@gitolite.mirantis.com:netapp-e-series/tempest.git
+TEMPEST_BRANCH=stable/grizzly-netapp
 
 disable_service n-net
 enable_service q-svc
