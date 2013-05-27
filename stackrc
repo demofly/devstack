@@ -223,7 +223,7 @@ PUBLIC_NETWORK_NAME=${PUBLIC_NETWORK_NAME:-"public"}
 USE_SCREEN=${SCREEN_DEV:-$USE_SCREEN}
 
 # allow local NetApp project overrides of env variables
-if [ -f $RC_DIR/localrc ]; then
+if [ -f $RC_DIR/stackrc.local ]; then
     source $RC_DIR/stackrc.local
 fi
 
