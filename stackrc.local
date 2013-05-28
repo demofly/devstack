@@ -12,6 +12,7 @@ enable_service q-l3
 enable_service q-meta
 enable_service quantum
 enable_service tempest
+enable_service swift
 DATABASE_PASSWORD=pwd
 RABBIT_PASSWORD=pwd
 SERVICE_TOKEN=pwd
