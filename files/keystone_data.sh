@@ -124,6 +124,8 @@ fi
 
 # Swift
 
+S3_SERVICE_PORT=${S3_SERVICE_PORT:-8080}
+
 if [[ "$ENABLED_SERVICES" =~ "swift" || "$ENABLED_SERVICES" =~ "s-proxy" ]]; then
     SWIFT_USER=$(get_id keystone user-create \
         --name=swift \
@@ -142,9 +144,9 @@ if [[ "$ENABLED_SERVICES" =~ "swift" || "$ENABLED_SERVICES" =~ "s-proxy" ]]; the
         keystone endpoint-create \
             --region RegionOne \
             --service_id $SWIFT_SERVICE \
-            --publicurl "http://$SERVICE_HOST:8080/v1/AUTH_\$(tenant_id)s" \
-            --adminurl "http://$SERVICE_HOST:8080" \
-            --internalurl "http://$SERVICE_HOST:8080/v1/AUTH_\$(tenant_id)s"
+            --publicurl "http://$SERVICE_HOST:$S3_SERVICE_PORT/v1/AUTH_\$(tenant_id)s" \
+            --adminurl "http://$SERVICE_HOST:$S3_SERVICE_PORT" \
+            --internalurl "http://$SERVICE_HOST:$S3_SERVICE_PORT/v1/AUTH_\$(tenant_id)s"
     fi
 fi
 

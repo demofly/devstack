@@ -142,12 +142,14 @@ function configure_keystone() {
         inicomment $KEYSTONE_CONF catalog template_file
     else
         cp -p $FILES/default_catalog.templates $KEYSTONE_CATALOG
+        
+        S3_SERVICE_PORT=${S3_SERVICE_PORT:-8080}
 
         # Add swift endpoints to service catalog if swift is enabled
         if is_service_enabled s-proxy; then
-            echo "catalog.RegionOne.object_store.publicURL = http://%SERVICE_HOST%:8080/v1/AUTH_\$(tenant_id)s" >> $KEYSTONE_CATALOG
-            echo "catalog.RegionOne.object_store.adminURL = http://%SERVICE_HOST%:8080/" >> $KEYSTONE_CATALOG
-            echo "catalog.RegionOne.object_store.internalURL = http://%SERVICE_HOST%:8080/v1/AUTH_\$(tenant_id)s" >> $KEYSTONE_CATALOG
+            echo "catalog.RegionOne.object_store.publicURL = http://%SERVICE_HOST%:$S3_SERVICE_PORT/v1/AUTH_\$(tenant_id)s" >> $KEYSTONE_CATALOG
+            echo "catalog.RegionOne.object_store.adminURL = http://%SERVICE_HOST%:$S3_SERVICE_PORT/" >> $KEYSTONE_CATALOG
+            echo "catalog.RegionOne.object_store.internalURL = http://%SERVICE_HOST%:$S3_SERVICE_PORT/v1/AUTH_\$(tenant_id)s" >> $KEYSTONE_CATALOG
             echo "catalog.RegionOne.object_store.name = Swift Service" >> $KEYSTONE_CATALOG
         fi
 
