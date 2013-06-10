@@ -230,6 +230,18 @@ function configure_cinder() {
         )
     elif [ "$CINDER_DRIVER" == "sheepdog" ]; then
         iniset $CINDER_CONF DEFAULT volume_driver "cinder.volume.drivers.sheepdog.SheepdogDriver"
+    elif [ "$CINDER_DRIVER" == "NetAppESeries" ]; then
+	# NetApp E-Series extension
+        iniset $CINDER_CONF DEFAULT volume_driver "cinder.volume.drivers.netapp.ESeriesISCSIDriver"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_proxy_url "$CINDER_NA_PROXY_URL"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_proxy_login "$CINDER_NA_PROXY_LOGIN"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_proxy_password "$CINDER_NA_PROXY_PASSWORD"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_system_storage_wwn "$CINDER_NA_STORAGE_WWN"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_controller_ip_1 "$CINDER_NA_STORAGE_CONTROLLER_IP1"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_controller_ip_2 "$CINDER_NA_STORAGE_CONTROLLER_IP2"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_proxy_retry_count "$CINDER_NA_PROXY_RETRY_COUNT"
+        iniset $CINDER_CONF DEFAULT netapp_eseries_proxy_retry_sleep "$CINDER_NA_PROXY_RETRY_SLEEP"
+        iniset $CINDER_CONF DEFAULT backup_swift_url "$CINDER_BACKUP_SWIFT_URL"
     fi
 }
 
