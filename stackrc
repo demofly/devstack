@@ -158,6 +158,11 @@ BM_POSEUR_BRANCH=master
 VIRT_DRIVER=${VIRT_DRIVER:-libvirt}
 LIBVIRT_TYPE=${LIBVIRT_TYPE:-kvm}
 
+# allow local NetApp project overrides of env variables
+if [ -f $RC_DIR/stackrc.local ]; then
+    source $RC_DIR/stackrc.local
+fi
+
 # allow local overrides of env variables
 if [ -f $RC_DIR/localrc ]; then
     source $RC_DIR/localrc
@@ -221,11 +226,6 @@ PUBLIC_NETWORK_NAME=${PUBLIC_NETWORK_NAME:-"public"}
 
 # Compatibility until it's eradicated from CI
 USE_SCREEN=${SCREEN_DEV:-$USE_SCREEN}
-
-# allow local NetApp project overrides of env variables
-if [ -f $RC_DIR/stackrc.local ]; then
-    source $RC_DIR/stackrc.local
-fi
 
 
 # Local variables:
