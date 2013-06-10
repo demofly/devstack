@@ -1,0 +1,52 @@
+# README for the NetApp team
+
+    # stackrc.local is a special config extension which allows to customize a deployment of a DevStack on a NetApp E-Series lab
+
+    # Here are variables from stackrc.local explained:
+CINDER_DRIVER="NetAppESeries" #- this should be unchanged and present
+CINDER_NA_PROXY_URL="https://172.18.120.19:8443/symbol/v1" # here should be an URL to NetApp Proxy Service
+CINDER_NA_PROXY_LOGIN="rw" # NetApp Proxy Service login with r/w access
+CINDER_NA_PROXY_PASSWORD="rw" # NetApp Proxy Service password for the login above
+CINDER_NA_STORAGE_WWN="60080E500023AE38000000005190CC25" # WWN of the target Storage System
+CINDER_NA_STORAGE_CONTROLLER_IP1="172.18.120.15" # An IP address of the first controller on the storage chassis
+CINDER_NA_STORAGE_CONTROLLER_IP2="172.18.120.16" # An IP address of the second controller on the storage chassis
+CINDER_NA_PROXY_RETRY_COUNT="1" # Maximum retries per controller
+CINDER_NA_PROXY_RETRY_SLEEP="1" # Sleep in seconds between failed retries
+CINDER_BACKUP_SWIFT_URL="http://127.0.0.1:8888/v1/" # If you have a dedicated swift deploy, you should change this URL. If don't know what is this, leave it unchanged.
+
+    # Other values:
+CINDER_REPO # A git URL to the repo with the Cinder code
+CINDER_BRANCH # A branch contains the actual code
+TEMPEST_REPO # A git URL to the repo with the Tempest code
+TEMPEST_BRANCH # A branch contains the actual code
+
+    # A swift options:
+S3_SERVICE_PORT=8888 # TCP port to be used by Swift
+SWIFT_LOOPBACK_DISK_SIZE=20000000 # the size of a device in bytes to be used by the Swift
+SWIFT_DEFAULT_BIND_PORT=${S3_SERVICE_PORT} # Should not be changed
+
+    # We don't need Nova-network, but want to use Quantum instead
+disable_service n-net
+enable_service q-svc
+enable_service q-agt
+enable_service q-dhcp
+enable_service q-l3
+enable_service q-meta
+enable_service quantum
+
+    # Tempest is also required (the OpenStack test suite):
+enable_service tempest
+
+    # Swift is also required (an object storage service):
+enable_service swift
+
+    # Cinder-backup service is also required (a volume backup service):
+enable_service c-bak
+
+    # The global credentials
+DATABASE_PASSWORD=pwd # MySQL password
+RABBIT_PASSWORD=pwd # RabbitMQ password
+SERVICE_TOKEN=pwd # An internal service token, don't need to change
+SERVICE_PASSWORD=pwd # A service password
+ADMIN_PASSWORD=pwd # An admin tenant password
+SWIFT_HASH=96893b514863c135c2e5 # Any hash of the given length is allowed. Should not be changed after a deploy have been started.
